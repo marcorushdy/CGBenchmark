@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>CGBenchmark results</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+	<style>
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div style="display: flex;">
+		<div style="width:75%;">
+			<canvas id="canvas"></canvas>
+		</div>
+		<div style="width:25%;">
+			<form name="myform">
+			</form>
+			<button onclick="reload()">Reload</button>
+			<button onclick="select(true)">Select all</button>
+			<button onclick="select(false)">Unselect all</button>
+		</div>
+	</div>
+	<script>
+		var config = {
+			type: 'line',
+			data: {
+				labels: ["Azkellas_2392152","DanielGorski_2392136","Kasparas_2391678","Vadasz_2391547","emh_2391545","eulerscheZahl_2391542","reCurse_2391563","siman_2392161","teccles_2391538"],
+				datasets: [{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"10a.cpp","data":[72.22222222222221,79.16666666666666,41.17647058823529,53.57142857142857,47.05882352941176,43.333333333333336,86.66666666666667,53.57142857142857,46.875],"borderColor":"#000000","backgroundColor":"#000000","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]},{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"09f.cpp","data":[80.55555555555556,79.16666666666666,32.35294117647059,53.57142857142857,82.35294117647058,53.333333333333336,73.33333333333333,42.857142857142854,59.375],"borderColor":"#FF0000","backgroundColor":"#FF0000","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]},{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"08cfix.cpp","data":[69.44444444444444,91.66666666666666,41.17647058823529,50.0,67.64705882352942,50.0,63.33333333333333,46.42857142857143,56.25],"borderColor":"#00FF00","backgroundColor":"#00FF00","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]},{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"06ab.cpp","data":[44.44444444444444,29.166666666666668,23.52941176470588,42.857142857142854,35.294117647058826,16.666666666666664,23.333333333333332,28.57142857142857,31.25],"borderColor":"#0000FF","backgroundColor":"#0000FF","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]},{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"08.cpp","data":[66.66666666666666,83.33333333333334,35.294117647058826,42.857142857142854,67.64705882352942,56.666666666666664,60.0,50.0,59.375],"borderColor":"#ABAB57","backgroundColor":"#ABAB57","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]},{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"07.cpp","data":[33.33333333333333,54.166666666666664,20.588235294117645,42.857142857142854,47.05882352941176,26.666666666666668,46.666666666666664,28.57142857142857,18.75],"borderColor":"#00FFFF","backgroundColor":"#00FFFF","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]},{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"08b.cpp","data":[63.888888888888886,83.33333333333334,38.23529411764706,42.857142857142854,70.58823529411765,53.333333333333336,60.0,50.0,53.125],"borderColor":"#FF00FF","backgroundColor":"#FF00FF","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]},{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"06ab_fix_tower.cpp","data":[47.22222222222222,29.166666666666668,23.52941176470588,46.42857142857143,32.35294117647059,16.666666666666664,23.333333333333332,28.57142857142857,28.125],"borderColor":"#C0C0C0","backgroundColor":"#C0C0C0","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]},{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"09.cpp","data":[69.44444444444444,91.66666666666666,41.17647058823529,57.14285714285714,70.58823529411765,53.333333333333336,70.0,39.285714285714285,53.125],"borderColor":"#808080","backgroundColor":"#808080","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]},{"fill":false,"pointBackgroundColor":"rgba(0, 0, 0, 0.1)","label":"06ab_fix.cpp","data":[47.22222222222222,29.166666666666668,23.52941176470588,46.42857142857143,38.23529411764706,16.666666666666664,23.333333333333332,28.57142857142857,28.125],"borderColor":"#800000","backgroundColor":"#800000","pointRadius":[1,12,2,8,2,6,6,8,4],"pointHoverRadius":[1,12,2,8,2,6,6,8,4]}]
+			},
+			options: {
+				responsive: true,
+				legend: {
+					position: 'bottom',
+				},
+				hover: {
+					mode: 'index'
+				},
+				tooltips: {
+					callbacks: {
+						label: function(tooltipItems, data) {
+							var sum = 0;
+							console.log("callback");
+							return 'Sum: ' + sum;
+						}
+					}
+				},
+				scales: {
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Winrate'
+						}
+					}]
+				}
+			}
+		};
+
+		var fullNickList = config.data.labels.slice(0);
+
+		window.onload = function () {
+			initForm();
+			reload();
+		};
+
+		function initForm() {
+			for (nick of fullNickList) {
+				var cb = document.createElement("input");
+				cb.type = "checkbox";
+				cb.checked = true;
+				cb.id = nick;
+				var l = document.createElement("Label");
+				l.setAttribute("for", nick);
+				l.innerHTML = nick;
+				l.appendChild(cb);
+				document.forms.myform.appendChild(cb);
+				document.forms.myform.appendChild(l);
+				document.forms.myform.appendChild(document.createElement("br"));
+			}
+		}
+
+		// TODO
+
+		// Pour indiquer la quantité de games jouées, et la précision du ranking, jouer sur la taille du point (plus petit, plus précis)
+		//		Check les pointStyle pour tenter de faire des bougies avec le vrai 
+		// Générer le rapport dans CGBenchmark
+
+		function select(val) {
+			for (var i = document.forms.myform.length - 1; i >= 0; i--) {
+				var elt = document.forms.myform[i];
+				elt.checked = val;
+			}
+		}
+
+		function reload() {
+			console.log('reload');
+
+			var localConfig = JSON.parse(JSON.stringify(config));
+
+			for (var i = document.forms.myform.length - 1; i >= 0; i--) {
+				var elt = document.forms.myform[i];
+				if (!elt.checked) {
+					localConfig.data.labels.splice(i, 1);
+					for (ds of localConfig.data.datasets) {
+						ds.data.splice(i, 1);
+						ds.pointRadius.splice(i, 1);
+						ds.pointHoverRadius.splice(i, 1);
+					}
+				}
+			}
+			var ctx = document.getElementById('canvas').getContext('2d');
+			if (window.myLine) window.myLine.destroy();
+			window.myLine = new Chart(ctx, localConfig);
+		}
+	</script>
+</body>
+
+</html>

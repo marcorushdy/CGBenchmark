@@ -84,11 +84,12 @@ public class CGBenchmark {
 
             ExecutorService threadPool = Executors.newFixedThreadPool(consumers.size());
 
-            String codeContent = null;
+            String codeContent;
             try {
                 codeContent = new String(Files.readAllBytes(Paths.get(codeCfg.getSourcePath())));
             } catch (IOException e) {
                 LOG.error("An error has occurred while reading source code for " + codeCfg.getSourcePath(), e);
+                continue;
             }
 
             testBroker.reset();
@@ -137,6 +138,8 @@ public class CGBenchmark {
             } catch (Exception e) {
                 LOG.warn("An error has occurred when writing final report", e);
             }
+
+            HTMLReportGenerator.generateHTMLReport();
         }
 
         LOG.info("No more tests. Ending.");
@@ -183,10 +186,8 @@ public class CGBenchmark {
         String cookie = String.join("; ", loginResponse.headers().values(Constants.SET_COOKIE));
         // Setting the cookie in the account configuration
         accountCfg.setAccountCookie(cookie);
-
         // Retrieving IDE handle
         String handle = retrieveHandle(retrofit, loginResponse.body().success.userId, accountCfg.getAccountCookie());
-
         // Setting the IDE session in the account configuration
         accountCfg.setAccountIde(handle);
     }

@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>CGBenchmark results</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <style>
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+		table {
+		    margin-top: 30px;
+		}
+		table, th, td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+<div style="display: flex;">
+    <div style="width:75%;">
+        <canvas id="canvas"></canvas>
+        ##EXTRA_INFO##
+    </div>
+    <div style="width:25%;">
+        <form name="myform">
+        </form>
+        <button onclick="reload()">Reload</button>
+        <button onclick="select(true)">Select all</button>
+        <button onclick="select(false)">Unselect all</button>
+    </div>
+</div>
+<script>
+		var config = {
+			type: 'line',
+			data: {
+				labels: ##LABEL_LIST##,
+				datasets: ##DATASET_LIST##
+			},
+			options: {
+				responsive: true,
+				legend: {
+					position: 'bottom',
+				},
+				hover: {
+					mode: 'index'
+				},
+				scales: {
+					yAxes: [{
+						display: true,
+						scaleLabel: {
+							display: true,
+							labelString: 'Winrate'
+						}
+					}]
+				}
+			}
+		};
+
+		var fullNickList = config.data.labels.slice(0);
+
+		window.onload = function () {
+			initForm();
+			reload();
+		};
+
+		function initForm() {
+			for (nick of fullNickList) {
+				var cb = document.createElement("input");
+				cb.type = "checkbox";
+				cb.checked = true;
+				cb.id = nick;
+				var l = document.createElement("Label");
+				l.setAttribute("for", nick);
+				l.innerHTML = nick;
+				l.appendChild(cb);
+				document.forms.myform.appendChild(cb);
+				document.forms.myform.appendChild(l);
+				document.forms.myform.appendChild(document.createElement("br"));
+			}
+		}
+
+        function select(val) {
+			for (var i = document.forms.myform.length - 1; i >= 0; i--) {
+				var elt = document.forms.myform[i];
+				elt.checked = val;
+			}
+		}
+
+		function reload() {
+			console.log('reload');
+
+			var localConfig = JSON.parse(JSON.stringify(config));
+
+			for (var i = document.forms.myform.length - 1; i >= 0; i--) {
+				var elt = document.forms.myform[i];
+				if (!elt.checked) {
+					localConfig.data.labels.splice(i, 1);
+					for (ds of localConfig.data.datasets) {
+						ds.data.splice(i, 1);
+						ds.pointRadius.splice(i, 1);
+						ds.pointHoverRadius.splice(i, 1);
+					}
+				}
+			}
+			var ctx = document.getElementById('canvas').getContext('2d');
+			if (window.myLine) window.myLine.destroy();
+			window.myLine = new Chart(ctx, localConfig);
+		}
+
+
+</script>
+</body>
+
+</html>

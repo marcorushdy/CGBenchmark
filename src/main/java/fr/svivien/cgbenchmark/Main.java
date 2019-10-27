@@ -26,8 +26,13 @@ public class Main {
         }
 
         // Need help ?
-        if (cmd.hasOption("h") || !cmd.hasOption("c")) {
+        if (cmd.hasOption("h")) {
             new HelpFormatter().printHelp("-c <json config file path> [-l]", options);
+            System.exit(0);
+        }
+
+        if (!cmd.hasOption("c")) {
+            HTMLReportGenerator.generateHTMLReport();
             System.exit(0);
         }
 
